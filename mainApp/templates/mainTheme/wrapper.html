@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Загаловок страницы</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body style="background: silver">
+  {% block content %}
+  {% endblock %}
+  <input type="text" id="check" placeholder="Введите имя">
+  <p style="cursor: pointer" id="load">Загрузить</p>
+  <div id="info"></div>
+</body>
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    function preLD(a, b) {
+      a = "Дмитрий", b = 27;
+      console.log("Имя: " + a + " Возраст: " + b + "");
+    };
+
+    function funSC(data) {
+      $('#info').html(data);
+    };
+    $('#load').on('click', function() {
+      age = "-";
+      $.ajax({
+        type: "POST",
+        url: "cont.php",
+        data: {
+          name:  $('#check').val(),
+          age: age
+        },
+        dataType: "html",
+        beforeSend: preLD,
+        success: funSC
+      });
+    });;
+  });
+</script>
+</html>
